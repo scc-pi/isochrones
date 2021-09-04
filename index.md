@@ -1,16 +1,16 @@
-Notes on Creating Isochrones
+Notes on creating isochrones
 ================
 
 ## Introduction
 
-Planning are drafting a policy to prevent new takeaways in certain
-areas. One of the policy criteria is no new takeaways within 400m of
-secondary schools. Current adopted policies use buffers,
-i.e. as-the-crow-flies, for such measurements. However, a more accurate
-measurement would be a 400m walk. For these we use isochrones. Strictly
-speaking a 400m distance from a school is an isodistance and a 5 minute
-walk is an isochrone, but the term isochrone is generally used to cover
-both distance and time from a point. The diagrams below illustrate the
+Our Planning Service are drafting a policy to prevent new takeaways in
+certain areas. One of the policy criteria is no new takeaways within
+400m of secondary schools. Current adopted policies use buffers for such
+measurements i.e. as-the-crow-flies. However, a more accurate
+measurement would be a 400m walk and using isochrones. Strictly speaking
+a 400m distance from a school is an isodistance and a 5 minute walk is
+an isochrone, but the term isochrone is generally used to cover both
+distance and time from a point. The diagrams below illustrate the
 difference between a buffer and an isochrone:
 
 *TODO: resize .pngs and caption*
@@ -40,8 +40,8 @@ require more effort:
 
 The resulting isochrones will be included in the [Portal
 App](https://sheffieldcitycouncil.cloud.esriuk.com/portal/apps/View/index.html?appid=ba3cbfdb0c3642c6bfe48500b11473e9)
-(requires a license and login credentials) created to help draft for the
-takeaways policy.
+(requires a license and login credentials), which was created to help
+draft the takeaways policy.
 
 # Secondary schools
 
@@ -85,7 +85,7 @@ a markdown file (.md) suitable for publishing to GitHub is generated.
 
 Unlike the [Notes](https://scc-pi.github.io/notes/) site, the bulk of
 the rendering is done locally rather than via GitHub Actions. To some
-extent this is simpler, and it also works around where rendering needing
+extent this is simpler, and it also works around where rendering needs
 to reference a local licensed installation of ArcGIS desktop. The site
 is setup as per the basic [GitHub Pages
 guidance](https://guides.github.com/features/pages). The rendering that

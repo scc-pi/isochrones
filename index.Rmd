@@ -1,6 +1,8 @@
 ---
-title: "Isochrones"
+title: "Exploration of Creating Isochrones"
 output: github_document
+nav_order: 2
+has_children: true
 ---
 
 ```{r setup, include=FALSE}

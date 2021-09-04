@@ -1,4 +1,4 @@
-Isochrones
+Exploration of Creating Isochrones
 ================
 
 ## Including Code

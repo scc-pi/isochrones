@@ -1,12 +1,6 @@
 Isochrones
 ================
 
-## GitHub Documents
-
-This is an R Markdown format used for publishing markdown documents to
-GitHub. When you click the **Knit** button all R code chunks are run and
-a markdown file (.md) suitable for publishing to GitHub is generated.
-
 ## Including Code
 
 You can include R code in the document as follows:
@@ -23,11 +17,20 @@ summary(cars)
     ##  3rd Qu.:19.0   3rd Qu.: 56.00  
     ##  Max.   :25.0   Max.   :120.00
 
-## Including Plots
+# Appendix
 
-You can also embed plots, for example:
+## GitHub Documents
 
-![](index_files/figure-gfm/pressure-1.png)<!-- -->
+This is an R Markdown format used for publishing markdown documents to
+GitHub. When you click the **Knit** button all R code chunks are run and
+a markdown file (.md) suitable for publishing to GitHub is generated.
 
-Note that the `echo = FALSE` parameter was added to the code chunk to
-prevent printing of the R code that generated the plot.
+Unlike the [Notes](https://scc-pi.github.io/notes/) site, the bulk of
+the rendering is done locally rather than via GitHub Actions. To some
+extent this is simpler, and it also works around where rendering needing
+to reference a local licensed installation of ArcGIS desktop.
+
+The site is setup as per the basic [GitHub Pages
+guidance](https://guides.github.com/features/pages/#setup). The
+rendering that isn’t local is via a [Jekyll
+theme](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll).

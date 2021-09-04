@@ -28,9 +28,8 @@ a markdown file (.md) suitable for publishing to GitHub is generated.
 Unlike the [Notes](https://scc-pi.github.io/notes/) site, the bulk of
 the rendering is done locally rather than via GitHub Actions. To some
 extent this is simpler, and it also works around where rendering needing
-to reference a local licensed installation of ArcGIS desktop.
-
-The site is setup as per the basic [GitHub Pages
-guidance](https://guides.github.com/features/pages/#setup). The
-rendering that isn’t local is via a [Jekyll
+to reference a local licensed installation of ArcGIS desktop. The site
+is setup as per the basic [GitHub Pages
+guidance](https://guides.github.com/features/pages). The rendering that
+isn’t local is via a [Jekyll
 theme](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll).

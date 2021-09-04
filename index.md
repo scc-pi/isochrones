@@ -1,16 +1,16 @@
-Creating Isochrones Notes
+Notes on Creating Isochrones
 ================
 
 ## Introduction
 
-Planning are drafting policy to restrict new takeaways in certain areas.
-One of the criteria is no new takeaways within 400m of secondary
-schools. Current adopted policies use buffers, i.e. as-the-crow-flies,
-for such measurements. However, a more accurate measurement would be a
-400m walk. For these we use isochrones. Strictly speaking a 400m
-distance from a school is an isodistance and a 5 minute walk is an
-isochrone, but the term isochrone is generally used to cover both
-distance and time from a point. The diagrams below illustrate the
+Planning are drafting a policy to prevent new takeaways in certain
+areas. One of the policy criteria is no new takeaways within 400m of
+secondary schools. Current adopted policies use buffers,
+i.e. as-the-crow-flies, for such measurements. However, a more accurate
+measurement would be a 400m walk. For these we use isochrones. Strictly
+speaking a 400m distance from a school is an isodistance and a 5 minute
+walk is an isochrone, but the term isochrone is generally used to cover
+both distance and time from a point. The diagrams below illustrate the
 difference between a buffer and an isochrone:
 
 *TODO: resize .pngs and caption*
@@ -43,6 +43,32 @@ App](https://sheffieldcitycouncil.cloud.esriuk.com/portal/apps/View/index.html?a
 (requires a license and login credentials) created to help draft for the
 takeaways policy.
 
+# Secondary schools
+
+*TODO: get secondary school features (try AGOL before Portal) & select
+just Park Academy*
+
+# AGOL logistic service & ArcGIS Pro
+
+*TODO: get isochrones from Portal and note from Word document*
+
+# openrouteservice & R
+
+The [openrouteservice R client
+package](https://giscience.github.io/openrouteservice-r/index.html)
+provides easy access to the
+[openrouteservice](https://openrouteservice.org/) (ORS) API from R.
+
+# OSMM Highways Network & Portal
+
+*TODO: get OneNote isochrone notes*
+
+# OSMM Highways Network & ArcGIS Pro
+
+# Other options
+
+*TODO: see takeaway bookmarks and in particular Lovelace paper*
+
 # Appendix
 
 ## ToDo
@@ -63,5 +89,5 @@ extent this is simpler, and it also works around where rendering needing
 to reference a local licensed installation of ArcGIS desktop. The site
 is setup as per the basic [GitHub Pages
 guidance](https://guides.github.com/features/pages). The rendering that
-isn’t local is via a [Jekyll
+isn’t local uses a [Jekyll
 theme](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll).

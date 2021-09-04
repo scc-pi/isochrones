@@ -1,5 +1,5 @@
 ---
-title: "Exploration of Creating Isochrones"
+title: "Creating Isochrones Notes"
 output: github_document
 nav_order: 2
 has_children: true
@@ -9,16 +9,41 @@ has_children: true
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Including Code
+## Introduction
 
-You can include R code in the document as follows:
+Planning are drafting policy to restrict new takeaways in certain areas. One of the criteria is no new takeaways within 400m of secondary schools. Current adopted policies use buffers, i.e. as-the-crow-flies, for such measurements. However, a more accurate measurement would be a 400m walk. For these we use isochrones. Strictly speaking a 400m distance from a school is an isodistance and a 5 minute walk is an isochrone, but the term isochrone is generally used to cover both distance and time from a point. The diagrams below illustrate the difference between a buffer and an isochrone:
 
-```{r cars}
-summary(cars)
-```
+*TODO: resize .pngs and caption*
 
+<img src="Images/buffer.png" title="circle" alt="Buffer" width="300"/>
+
+<img src="Images/isochrone.png" title="irregular polygon" alt="Isochrone" width="300"/>
+
+The purpose of these notes is to understand:
+
+1.  The best network dataset/service and software to use to create the isochrones.
+
+2.  How to define the school points e.g. the main school entrance?
+
+The best network dataset/service and software to use will be looked at in descending order of convenience i.e. those further down the list require more effort:
+
+-   AGOL logistic service and ArcGIS Pro
+
+-   openrouteservice and R
+
+-   OS MasterMap Highways Network and Portal
+
+-   OS MasterMap Highways Network and ArcGIS Pro
+
+The resulting isochrones will be included in the [Portal App](https://sheffieldcitycouncil.cloud.esriuk.com/portal/apps/View/index.html?appid=ba3cbfdb0c3642c6bfe48500b11473e9) (requires a license and login credentials) created to help draft for the takeaways policy.
 
 # Appendix
+
+## ToDo
+
+-   Left column navigation
+
+-   Separate documents
 
 ## GitHub Documents
 

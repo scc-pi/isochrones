@@ -1,7 +1,10 @@
 theme: jekyll-theme-cayman
 remote_theme: pmarsceill/just-the-docs
 
+# Site settings
+title: Isochrones
+
 # Aux links for the upper right navigation
 aux_links:
-  "Just the Docs on GitHub":
-    - "//github.com/pmarsceill/just-the-docs"
+  "View source on GitHub":
+    - "//github.com/scc-pi/isochrones"

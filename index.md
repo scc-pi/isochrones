@@ -3,15 +3,14 @@ Notes on creating isochrones
 
 ## Introduction
 
-Our Planning Service are drafting a policy to prevent new takeaways in
-certain areas. One of the policy criteria is no new takeaways within
-400m of secondary schools. Current adopted policies use buffers for such
-measurements i.e. as-the-crow-flies. However, a more accurate
-measurement would be a 400m walk and using isochrones. Strictly speaking
-a 400m distance from a school is an isodistance and a 5 minute walk is
-an isochrone, but the term isochrone is generally used to cover both
-distance and time from a point. The diagrams below illustrate the
-difference between a buffer and an isochrone:
+As part of helping to draft a new policy we need to consider areas
+within 400m of secondary schools. Buffers have previously been used for
+such measurements i.e. as-the-crow-flies. However, for the draft policy
+a more accurate measurement would be a 400m walk and using isochrones.
+Strictly speaking a 400m distance from a school is an isodistance and a
+5 minute walk is an isochrone, but the term isochrone is generally used
+to cover both distance and time from a point. The diagrams below
+illustrate the difference between a buffer and an isochrone:
 
 *TODO: resize .pngs and caption*
 
@@ -41,7 +40,7 @@ require more effort:
 The resulting isochrones will be included in the [Portal
 App](https://sheffieldcitycouncil.cloud.esriuk.com/portal/apps/View/index.html?appid=ba3cbfdb0c3642c6bfe48500b11473e9)
 (requires a license and login credentials), which was created to help
-draft the takeaways policy.
+draft the policy.
 
 # Secondary schools
 
@@ -73,7 +72,8 @@ provides easy access to the
 
 ## ToDo
 
--   Left column navigation
+-   Left column navigation (try [includes:
+    in\_header:](https://rmarkdown.rstudio.com/github_document_format.html#Figure_Options))
 
 -   Separate documents
 

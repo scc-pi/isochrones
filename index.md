@@ -42,29 +42,29 @@ App](https://sheffieldcitycouncil.cloud.esriuk.com/portal/apps/View/index.html?a
 (requires a license and login credentials), which was created to help
 draft the policy.
 
-# Secondary schools
+## Secondary schools
 
 *TODO: get secondary school features (try AGOL before Portal) & select
 just Park Academy*
 
-# AGOL logistic service & ArcGIS Pro
+## AGOL logistic service & ArcGIS Pro
 
 *TODO: get isochrones from Portal and note from Word document*
 
-# openrouteservice & R
+## openrouteservice & R
 
 The [openrouteservice R client
 package](https://giscience.github.io/openrouteservice-r/index.html)
 provides easy access to the
 [openrouteservice](https://openrouteservice.org/) (ORS) API from R.
 
-# OSMM Highways Network & Portal
+## OSMM Highways Network & Portal
 
 *TODO: get OneNote isochrone notes*
 
-# OSMM Highways Network & ArcGIS Pro
+## OSMM Highways Network & ArcGIS Pro
 
-# Other options
+## Other options
 
 *TODO: see takeaway bookmarks and in particular Lovelace paper*
 

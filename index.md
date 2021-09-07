@@ -44,8 +44,39 @@ draft the policy.
 
 ## Secondary schools
 
-*TODO: get secondary school features (try AGOL before Portal) & select
-just Park Academy*
+The first thing to do is get the secondary school features we want to
+create isocrones for. I’ve made some [notes about the Council’s
+GIS](https://scc-pi.github.io/notes/gis.html#gis), and more specifically
+about the [R-ArcGIS
+Bridge](https://scc-pi.github.io/notes/gis.html#r-arcgis-bridge) that is
+used below to get the data from the Council’s web GIS.
+
+``` r
+# URL for secondary schools from the Council's Portal (without a token!)
+secondary_school_url  <- str_c("https://sheffieldcitycouncil.cloud.esriuk.com",
+                               "/server/rest/services/AGOL/Education/FeatureServer/3")
+
+# Get secondary schools as simple features
+sf_secondary_school <- arc.open(secondary_school_url) %>% 
+  arc.select() %>% 
+  arc.data2sf()
+
+# URL for the city boundary from the Council's AGOL Open Data
+city_boundary_url  <- str_c("https://utility.arcgis.com/usrsvcs/servers/",
+                            "4cdfd020c6f54581a3065c734535adab/rest/services/",
+                            "AGOL/OpenData/MapServer/11")
+
+# Get city boundary as simple feature
+sf_city <- arc.open(city_boundary_url) %>% 
+  arc.select() %>% 
+  arc.data2sf()
+
+# Plot
+mapview(list(sf_secondary_school, sf_city), 
+        layer.name = list("secondary schools", "Sheffield boundary"))
+```
+
+![](index_files/figure-gfm/school-features-1.png)<!-- -->
 
 ## AGOL logistic service & ArcGIS Pro
 
@@ -66,7 +97,7 @@ provides easy access to the
 
 ## Other options
 
-*TODO: see takeaway bookmarks and in particular Lovelace paper*
+*TODO: see takeaway bookmarks and in particular the Lovelace paper*
 
 # Appendix
 

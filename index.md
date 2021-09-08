@@ -112,7 +112,7 @@ park_basemap <- get_stamenmap(bbox = park_bbox, zoom = 16, maptype = "toner")
 # Plot
 ggmap(park_basemap) +
   geom_sf(data = sf_park, mapping = aes(),
-          colour = "blue", size = 3, inherit.aes = FALSE) +
+          colour = "blue", size = 4, inherit.aes = FALSE) +
   ggtitle("Sheffield Park Academy") +
   theme_void()
 ```
@@ -165,16 +165,16 @@ sf_park_isochrone <- filter(sf_isochrones, facilityid == 28)
 # Plot
 ggmap(park_basemap, extent = "device") +
   geom_sf(data = sf_park_isochrone, mapping = aes(),
-          colour = "blue", fill = NA, inherit.aes = FALSE) +
+          colour = "blue", size = 1.5, fill = NA, inherit.aes = FALSE) +
   geom_sf(data = sf_park, mapping = aes(),
-          colour = "blue", size = 3, inherit.aes = FALSE) +
+          colour = "blue", size = 4, inherit.aes = FALSE) +
   ggtitle("Sheffield Park Academy 400m Isochrone") +
   theme_void()
 ```
 
 ![](index_files/figure-gfm/agol-pro-park-1.png)<!-- -->
 
-The roundabout on the Prince of Wales Road has a walkway that goes
+The roundabout on Prince of Wales Road has a walkway that goes
 underneath it but above the Parkway. The AGOL location service hasn’t
 included this walkway, so the isochrone stops incorrectly short of the
 Parkway.

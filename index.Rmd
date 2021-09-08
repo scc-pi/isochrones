@@ -69,31 +69,56 @@ city_boundary_url  <- str_c("https://utility.arcgis.com/usrsvcs/servers/",
                             "AGOL/OpenData/MapServer/11")
 
 # Get the city boundary as a simple feature with WSG84 coordinates 
-sf_city <- arc.open(city_boundary_url) %>% 
+sf_city_boundary <- arc.open(city_boundary_url) %>% 
   arc.select() %>% 
   arc.data2sf() %>% 
   st_transform(crs = 4326)
 
 # Get the bounding box (coordinates) for Sheffield
-shef_bbox <- st_buffer(sf_city, 1000) %>% 
+shef_bbox <- st_buffer(sf_city_boundary, 1000) %>% 
   st_bbox() %>%
   as.numeric()
 
 # Get a basemap
-basemap <- get_map(location = shef_bbox, 
-                   zoom = 11, 
+shef_basemap <- get_map(location = shef_bbox, 
+                   zoom = 11,
                    maptype = 'terrain-background', 
                    source = 'stamen')
 
 # Plot
-ggmap(basemap, legend = "left") +
+ggmap(shef_basemap) +
   geom_sf(data = sf_secondary_schools, mapping = aes(),
           colour = "blue", inherit.aes = FALSE) +
-  geom_sf(data = sf_city, mapping = aes(), 
+  geom_sf(data = sf_city_boundary, mapping = aes(), 
           fill = NA, colour = "black", size = 1, inherit.aes = FALSE) +
   ggtitle("Sheffield Secondary Schools") +
   theme_void()
 ```
+For the purpose of comparing isochrones created from different network datasets/services and software, we'll focus on Sheffield Park Academy.
+
+```{r park-academy}
+# Get a subset of just Sheffield Park Academy as a simple feature
+sf_park <- filter(sf_secondary_schools, school_org == "Sheffield Park Academy")
+
+# Get the bounding box (coordinates) for Park Academy
+park_bbox <- st_buffer(sf_park, 1000) %>% 
+  st_bbox() %>%
+  as.numeric()
+
+# Get a basemap
+park_basemap <- get_map(location = park_bbox, 
+                        zoom = 14, 
+                        maptype = 'terrain-background',
+                        source = 'stamen')
+
+# Plot
+ggmap(park_basemap) +
+  geom_sf(data = sf_park, mapping = aes(),
+          colour = "blue", size = 3, inherit.aes = FALSE) +
+  ggtitle("Sheffield Park Academy") +
+  theme_void()
+```
+
 
 ## AGOL logistic service & ArcGIS Pro
 

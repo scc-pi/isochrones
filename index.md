@@ -53,8 +53,9 @@ used below to get the data from the Council’s web GIS.
 
 ``` r
 # URL for secondary schools from the Council's Portal (without a token!)
-secondary_schools_url  <- str_c("https://sheffieldcitycouncil.cloud.esriuk.com",
-                               "/server/rest/services/AGOL/Education/FeatureServer/3")
+secondary_schools_url  <- str_c(
+  "https://sheffieldcitycouncil.cloud.esriuk.com",
+  "/server/rest/services/AGOL/Education/FeatureServer/3")
 
 # Get secondary schools as simple features with WSG84 coordinates
 sf_secondary_schools <- arc.open(secondary_schools_url) %>% 
@@ -63,9 +64,9 @@ sf_secondary_schools <- arc.open(secondary_schools_url) %>%
   st_transform(crs = 4326)
 
 # URL for the city boundary from the Council's AGOL Open Data
-city_boundary_url  <- str_c("https://utility.arcgis.com/usrsvcs/servers/",
-                            "4cdfd020c6f54581a3065c734535adab/rest/services/",
-                            "AGOL/OpenData/MapServer/11")
+city_boundary_url  <- str_c(
+  "https://utility.arcgis.com/usrsvcs/servers/4cdfd020c6f54581a3065c734535adab",
+  "/rest/services/AGOL/OpenData/MapServer/11")
 
 # Get the city boundary as a simple feature with WSG84 coordinates 
 sf_city_boundary <- arc.open(city_boundary_url) %>% 
@@ -106,7 +107,7 @@ park_bbox <- st_buffer(sf_park, 500) %>%
   as.numeric()
 
 # Get a basemap
-park_basemap <- get_stamenmap(bbox = park_bbox, zoom = 15, maptype = "toner-hybrid")
+park_basemap <- get_stamenmap(bbox = park_bbox, zoom = 16, maptype = "toner")
 
 # Plot
 ggmap(park_basemap) +
@@ -162,7 +163,7 @@ Focusing on the isochrone for our example, Sheffield Park Academy:
 sf_park_isochrone <- filter(sf_isochrones, facilityid == 28)
 
 # Plot
-ggmap(park_basemap) +
+ggmap(park_basemap, extent = "device") +
   geom_sf(data = sf_park_isochrone, mapping = aes(),
           colour = "blue", fill = NA, inherit.aes = FALSE) +
   geom_sf(data = sf_park, mapping = aes(),
@@ -175,7 +176,7 @@ ggmap(park_basemap) +
 
 The roundabout on the Prince of Wales Road has a walkway that goes
 underneath it but above the Parkway. The AGOL location service hasn’t
-included this walkway so the isochrone stops incorrectly short of the
+included this walkway, so the isochrone stops incorrectly short of the
 Parkway.
 
 ## openrouteservice & R

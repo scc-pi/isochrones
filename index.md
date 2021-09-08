@@ -67,14 +67,15 @@ city_boundary_url  <- str_c("https://utility.arcgis.com/usrsvcs/servers/",
                             "4cdfd020c6f54581a3065c734535adab/rest/services/",
                             "AGOL/OpenData/MapServer/11")
 
-# Get city boundary as a simple feature with WSG84 coordinates 
+# Get the city boundary as a simple feature with WSG84 coordinates 
 sf_city <- arc.open(city_boundary_url) %>% 
   arc.select() %>% 
   arc.data2sf() %>% 
   st_transform(crs = 4326)
 
 # Get the bounding box (coordinates) for Sheffield
-shef_bbox <-  st_bbox(sf_city) %>%
+shef_bbox <- st_buffer(sf_city, 1000) %>% 
+  st_bbox() %>%
   as.numeric()
 
 # Get a basemap
@@ -82,44 +83,16 @@ basemap <- get_map(location = shef_bbox,
                    zoom = 11, 
                    maptype = 'terrain-background', 
                    source = 'stamen')
-```
 
-    ## Source : http://tile.stamen.com/terrain/11/1013/662.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1014/662.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1015/662.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1016/662.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1013/663.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1014/663.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1015/663.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1016/663.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1013/664.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1014/664.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1015/664.png
-
-    ## Source : http://tile.stamen.com/terrain/11/1016/664.png
-
-``` r
 # Plot
-ggmap(basemap) +
+ggmap(basemap, legend = "left") +
   geom_sf(data = sf_secondary_schools, mapping = aes(),
-          colour = "blue",
-          inherit.aes = FALSE) +
+          colour = "blue", inherit.aes = FALSE) +
   geom_sf(data = sf_city, mapping = aes(), 
-          fill = NA, colour = "black", size = 1.5,
-          inherit.aes = FALSE)
+          fill = NA, colour = "black", size = 1, inherit.aes = FALSE) +
+  ggtitle("Sheffield Secondary Schools") +
+  theme_void()
 ```
-
-    ## Coordinate system already present. Adding new coordinate system, which will replace the existing one.
 
 ![](index_files/figure-gfm/school-features-1.png)<!-- -->
 

@@ -1,3 +1,7 @@
+---
+nav_order: 2
+has_children: true
+---
 Notes on creating isochrones
 ================
 
@@ -58,9 +62,9 @@ secondary_schools_url  <- str_c(
   "/server/rest/services/AGOL/Education/FeatureServer/3")
 
 # Get secondary schools as simple features with WSG84 coordinates
-sf_secondary_schools <- arc.open(secondary_schools_url) %>% 
-  arc.select() %>% 
-  arc.data2sf() %>% 
+sf_secondary_schools <- arc.open(secondary_schools_url) %>%
+  arc.select() %>%
+  arc.data2sf() %>%
   st_transform(crs = 4326)
 
 # URL for the city boundary from the Council's AGOL Open Data
@@ -68,14 +72,14 @@ city_boundary_url  <- str_c(
   "https://utility.arcgis.com/usrsvcs/servers/4cdfd020c6f54581a3065c734535adab",
   "/rest/services/AGOL/OpenData/MapServer/11")
 
-# Get the city boundary as a simple feature with WSG84 coordinates 
-sf_city_boundary <- arc.open(city_boundary_url) %>% 
-  arc.select() %>% 
-  arc.data2sf() %>% 
+# Get the city boundary as a simple feature with WSG84 coordinates
+sf_city_boundary <- arc.open(city_boundary_url) %>%
+  arc.select() %>%
+  arc.data2sf() %>%
   st_transform(crs = 4326)
 
 # Get the bounding box (coordinates) for Sheffield
-shef_bbox <- st_buffer(sf_city_boundary, 1000) %>% 
+shef_bbox <- st_buffer(sf_city_boundary, 1000) %>%
   st_bbox() %>%
   as.numeric()
 
@@ -86,7 +90,7 @@ shef_basemap <- get_stamenmap(bbox = shef_bbox, zoom = 11, maptype = "toner")
 ggmap(shef_basemap) +
   geom_sf(data = sf_secondary_schools, mapping = aes(),
           colour = "blue", inherit.aes = FALSE) +
-  geom_sf(data = sf_city_boundary, mapping = aes(), 
+  geom_sf(data = sf_city_boundary, mapping = aes(),
           fill = NA, colour = "brown", size = 1, inherit.aes = FALSE) +
   ggtitle("Sheffield Secondary Schools") +
   theme_void()
@@ -102,7 +106,7 @@ datasets/services and software, we’ll focus on Sheffield Park Academy.
 sf_park <- filter(sf_secondary_schools, school_org == "Sheffield Park Academy")
 
 # Get the bounding box (coordinates) for Park Academy
-park_bbox <- st_buffer(sf_park, 500) %>% 
+park_bbox <- st_buffer(sf_park, 500) %>%
   st_bbox() %>%
   as.numeric()
 
@@ -137,9 +141,9 @@ isochrones_url  <- str_c(
   "pjtFC0l1tSnExQ2tFyA3UR5zArYLZDV_8DrwMySPs4_0rzwWR4gShptQqPErbwkY078.")
 
 # Get secondary school isochrones as simple features with WSG84 coordinates
-sf_isochrones <- arc.open(isochrones_url) %>% 
-  arc.select() %>% 
-  arc.data2sf() %>% 
+sf_isochrones <- arc.open(isochrones_url) %>%
+  arc.select() %>%
+  arc.data2sf() %>%
   st_transform(crs = 4326)
 
 # Plot
@@ -148,7 +152,7 @@ ggmap(shef_basemap) +
           colour = "blue", inherit.aes = FALSE) +
   geom_sf(data = sf_secondary_schools, mapping = aes(),
           colour = "blue", size = 0.5, inherit.aes = FALSE) +
-  geom_sf(data = sf_city_boundary, mapping = aes(), 
+  geom_sf(data = sf_city_boundary, mapping = aes(),
           fill = NA, colour = "brown", size = 1, inherit.aes = FALSE) +
   ggtitle("Sheffield Secondary School 400m Iscochrones") +
   theme_void()

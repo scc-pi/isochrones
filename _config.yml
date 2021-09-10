@@ -2,7 +2,7 @@ theme: jekyll-theme-cayman
 remote_theme: pmarsceill/just-the-docs
 
 # Site settings
-title: Isochrones
+title: Isochrone Notes
 
 # Aux links for the upper right navigation
 aux_links:

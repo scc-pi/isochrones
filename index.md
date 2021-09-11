@@ -2,8 +2,7 @@
 nav_order: 1
 ---
 
-Introduction
-================
+## Introduction
 
 As part of helping to draft a new policy we need to consider areas
 within 400m of secondary schools. Buffers have previously been used for

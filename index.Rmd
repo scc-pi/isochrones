@@ -1,12 +1,15 @@
 ---
-title: "Introduction"
-output: github_document
+output:
+  github_document:
+    includes:
+      before_body: nav01.YAML
 ---
-
 ```{r setup, include=FALSE}
 # Document options
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Introduction
 
 As part of helping to draft a new policy we need to consider areas within 400m of secondary schools. Buffers have previously been used for such measurements i.e. as-the-crow-flies. However, for the draft policy a more accurate measurement would be a 400m walk and using isochrones. The diagrams below illustrate the difference between a buffer and an isochrone:
 

@@ -1,18 +1,14 @@
 ---
-output: github_document
+output:
+  github_document:
+    includes:
+      before_body: nav02.YAML
 ---
 
 ```{r setup, include=FALSE}
-# Document options
 knitr::opts_chunk$set(echo = TRUE, message = FALSE)
 
-# Data manipulation packages
-library(tidyverse); library(janitor)
-
-# Neater code
-library(magrittr)
-
-# Spatial packages
+library(tidyverse);library(magrittr)
 library(sf); library(ggmap)
 library(arcgisbinding); arc.check_product()
 ```

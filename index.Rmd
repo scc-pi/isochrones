@@ -3,7 +3,7 @@ title: "Isochrone Notes"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 author: Laurie Platt (BI Team, Sheffield City Council)
 output: 
-  html_notebook: 
+  html_document: 
     code_folding: none
     number_sections: yes
     theme: simplex

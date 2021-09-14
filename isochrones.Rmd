@@ -5,19 +5,36 @@ author: Laurie Platt (BI Team, Sheffield City Council)
 output: 
   html_document: 
     code_folding: none
-    number_sections: no
     theme: simplex
     toc: yes
     toc_float: yes
 ---
+
+```{=html}
 <style type="text/css">
-h1 { /* Header 1 */
+h1.title {
+  font-size: 24px;
+  font-weight: bold;
+}
+h1 { 
   font-size: 20px;
+  font-weight: bold;
+}
+h4.author { 
+  font-size: 14px;
+  font-style: italic;
+}
+h4.date { 
+  font-size: 14px;
+  font-style: italic;
 }
 </style>
-
+```
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE
+)
 
 library(tidyverse);library(magrittr)
 library(sf); library(ggmap)
@@ -28,11 +45,13 @@ library(arcgisbinding); arc.check_product()
 
 As part of helping to draft a new policy we need to consider areas within 400m of secondary schools. Buffers have previously been used for such measurements i.e. as-the-crow-flies. However, for the draft policy a more accurate measurement would be a 400m walk and using isochrones. The diagrams below illustrate the difference between a buffer and an isochrone:
 
-*TODO: resize .pngs and caption*
+[Buffer]{.ul}
 
-<img src="Images/buffer.png" title="circle" alt="Buffer" width="300"/>
+![](buffer.png)
 
-<img src="Images/isochrone.png" title="irregular polygon" alt="Isochrone" width="300"/>
+[Isochrone]{.ul}
+
+![](isochrone.png)
 
 Strictly speaking, a 400m distance from a school is an isodistance and a 5 minute walk is an isochrone. However, the term isochrone is generally used to cover both distance and time from a point.
 
@@ -101,7 +120,7 @@ ggmap(shef_basemap) +
 
 For the purpose of comparing isochrones created from different network datasets/services and software, we'll focus on Sheffield Park Academy.
 
-```{r park-academy, fig.height = 8}
+```{r park-academy, fig.height = 7}
 # Get a subset of just Sheffield Park Academy as a simple feature
 sf_park <- filter(sf_secondary_schools, school_org == "Sheffield Park Academy")
 
@@ -121,9 +140,11 @@ ggmap(park_basemap) +
   theme_void()
 ```
 
+*TODO: Check school projection is correct*
+
 # AGOL logistic service & ArcGIS Pro
 
-I've added a feature layer on Portal of isochrones I created using ArcGIS Pro and the AGOL logistic service.There are some very rough notes on what I did in the [TakeawaysDataAndApp.docx](https://1drv.ms/w/s!AhGALyAD2g76ibwuUw9xeggd29iV4g?e=Coiglw) under "Appendix i) Breadcrumbs - School Isochrones".  
+I've added a feature layer on Portal of isochrones I created using ArcGIS Pro and the AGOL logistic service. There are some very rough notes on what I did in the [TakeawaysDataAndApp.docx](https://1drv.ms/w/s!AhGALyAD2g76ibwuUw9xeggd29iV4g?e=Coiglw) under "Appendix i) Breadcrumbs - School Isochrones".
 
 ```{r agol-pro, fig.height = 5}
 # URL for secondary school isochrones from the Council's Portal (with a token!)
@@ -154,7 +175,7 @@ ggmap(shef_basemap) +
 
 Focusing on the isochrone for our example, Sheffield Park Academy:
 
-```{r agol-pro-park, fig.height = 8}
+```{r agol-pro-park, fig.height = 7}
 # Get a subset of just Sheffield Park Academy isochrone as a simple feature
 sf_park_isochrone <- filter(sf_isochrones, facilityid == 28)
 
@@ -168,7 +189,7 @@ ggmap(park_basemap, extent = "device") +
   theme_void()
 ```
 
-The roundabout on Prince of Wales Road has a walkway that goes underneath it but above the Parkway. The AGOL location service hasn't included this walkway, so the isochrone stops incorrectly short of the Parkway. 
+The roundabout on Prince of Wales Road has a walkway that goes underneath it but above the Parkway. The AGOL location service hasn't included this walkway, so the isochrone stops incorrectly short of the Parkway.
 
 # openrouteservice & R
 

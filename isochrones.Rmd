@@ -34,7 +34,7 @@ h4.date {
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,	message = FALSE)
+knitr::opts_chunk$set(echo = TRUE,	message = FALSE, out.width = "100%")
 
 library(tidyverse);library(magrittr)
 library(sf); library(mapview); library(leafem); library(leaflet)
@@ -118,7 +118,7 @@ sf_park <- filter(sf_secondary_schools, school_org == "Sheffield Park Academy")
 park_coords <- st_coordinates(sf_park)
 
 # Plot
-m <- mapview(sf_park, layer.name = "Park Academy")
+m <- mapview(sf_park, layer.name = "Park Academy", label = "short_name")
 
 setView(m@map, park_coords[1], park_coords[2], zoom = 15)
 ```
@@ -143,12 +143,13 @@ sf_isochrones <- arc.open(isochrones_url) %>%
   st_transform(crs = 4326)
 
 # Plot
-mapview(sf_secondary_schools, 
-        layer.name = "Secondary schools", 
-        label = "short_name") %>% 
-  addFeatures(sf_isochrones, layer.name = "Isochrones") %>% 
-  addFeatures(sf_city_boundary, weight = 2, 
-              color = "black", opacity = 1, fillOpacity = 0)
+m <- mapview(sf_secondary_schools, 
+             layer.name = "Secondary schools", 
+             label = "short_name") + 
+ mapview(sf_isochrones, layer.name = "Isochrones")
+
+addFeatures(m, sf_city_boundary, weight = 2, 
+            color = "black", opacity = 1, fillOpacity = 0)
 ```
 
 Focusing on the isochrone for our example, Sheffield Park Academy:
@@ -158,13 +159,13 @@ Focusing on the isochrone for our example, Sheffield Park Academy:
 sf_park_isochrone <- filter(sf_isochrones, facilityid == 28)
 
 # Plot
-m <- mapview(sf_park, layer.name = "Park Academy") 
+m <- mapview(sf_park, layer.name = "Park Academy", label = "short_name") +
+  mapview(sf_park_isochrone, layer.name = "Isochrone")
 
-setView(m@map, park_coords[1], park_coords[2], zoom = 15) %>% 
-  addFeatures(sf_park_isochrone, layer.name = "Isochrone")
+setView(m@map, park_coords[1], park_coords[2], zoom = 15)
 ```
 
-The roundabout on Prince of Wales Road has a walkway that goes underneath it but above the Parkway. The AGOL location service hasn't included this walkway, so the isochrone stops incorrectly short of the Parkway.
+The roundabout on Prince of Wales Road has a walkway that goes underneath it. The AGOL location service hasn't included this walkway, so the isochrone stops incorrectly short of the Parkway.
 
 # openrouteservice & R
 

@@ -37,7 +37,7 @@ h4.date {
 knitr::opts_chunk$set(echo = TRUE,	message = FALSE)
 
 library(tidyverse);library(magrittr)
-library(sf); library(ggmap); library(mapview)
+library(sf); library(mapview); library(leafem); library(leaflet)
 library(arcgisbinding); arc.check_product()
 ```
 
@@ -77,7 +77,7 @@ The resulting isochrones will be included in the [Portal App](https://sheffieldc
 
 The first thing to do, is get the secondary school features we want to create isochrones for. I've made some [notes about the Council's GIS](https://scc-pi.github.io/notes/gis.html#gis), and more specifically about the [R-ArcGIS Bridge](https://scc-pi.github.io/notes/gis.html#r-arcgis-bridge) that is used below to get the data from the Council's web GIS.
 
-```{r school-features, fig.height = 5}
+```{r school-features}
 # URL for secondary schools from the Council's Portal (without a token!)
 secondary_schools_url  <- str_c(
   "https://sheffieldcitycouncil.cloud.esriuk.com",
@@ -100,54 +100,34 @@ sf_city_boundary <- arc.open(city_boundary_url) %>%
   arc.data2sf() %>% 
   st_transform(crs = 4326)
 
-# Get the bounding box (coordinates) for Sheffield
-shef_bbox <- st_buffer(sf_city_boundary, 1000) %>% 
-  st_bbox() %>%
-  as.numeric()
-
-# Get a basemap
-shef_basemap <- get_stamenmap(bbox = shef_bbox, zoom = 11, maptype = "toner")
-
 # Plot
-ggmap(shef_basemap) +
-  geom_sf(data = sf_secondary_schools, mapping = aes(),
-          colour = "blue", inherit.aes = FALSE) +
-  geom_sf(data = sf_city_boundary, mapping = aes(), 
-          fill = NA, colour = "brown", size = 1, inherit.aes = FALSE) +
-  ggtitle("Sheffield Secondary Schools") +
-  theme_void()
+mapview(sf_secondary_schools, 
+        layer.name = "Secondary schools", 
+        label = "short_name") %>% 
+  addFeatures(sf_city_boundary, weight = 2, 
+              color = "black", opacity = 1, fillOpacity = 0)
 ```
 
 For the purpose of comparing isochrones created from different network datasets/services and software, we'll focus on Sheffield Park Academy.
 
-```{r park-academy, fig.height = 7}
+```{r park-academy}
 # Get a subset of just Sheffield Park Academy as a simple feature
 sf_park <- filter(sf_secondary_schools, school_org == "Sheffield Park Academy")
 
-# Get the bounding box for Park Academy
-park_bbox <- st_buffer(sf_park, 500) %>% 
-  st_bbox() %>%
-  as.numeric()
-
-# Get a basemap
-park_basemap <- get_stamenmap(bbox = park_bbox, zoom = 16, maptype = "toner")
+# Park Academy coordinates
+park_coords <- st_coordinates(sf_park)
 
 # Plot
-# ggmap(park_basemap) +
-#   geom_sf(data = sf_park, mapping = aes(),
-#           colour = "blue", size = 4, inherit.aes = FALSE) +
-#   ggtitle("Sheffield Park Academy") +
-#   theme_void()
-mapview(sf_park, layer.name = "Sheffield Park Academy", zoom = 14)
-```
+m <- mapview(sf_park, layer.name = "Park Academy")
 
-*TODO: Check school projection is correct*
+setView(m@map, park_coords[1], park_coords[2], zoom = 15)
+```
 
 # AGOL logistic service & ArcGIS Pro
 
 I've added a feature layer on Portal of isochrones I created using ArcGIS Pro and the AGOL logistic service. There are some very rough notes on what I did in the [TakeawaysDataAndApp.docx](https://1drv.ms/w/s!AhGALyAD2g76ibwuUw9xeggd29iV4g?e=Coiglw) under "Appendix i) Breadcrumbs - School Isochrones".
 
-```{r agol-pro, fig.height = 5}
+```{r agol-pro}
 # URL for secondary school isochrones from the Council's Portal (with a token!)
 isochrones_url  <- str_c(
   "https://sheffieldcitycouncil.cloud.esriuk.com/server/rest/services/Hosted/",
@@ -163,31 +143,25 @@ sf_isochrones <- arc.open(isochrones_url) %>%
   st_transform(crs = 4326)
 
 # Plot
-ggmap(shef_basemap) +
-  geom_sf(data = sf_isochrones, mapping = aes(),
-          colour = "blue", inherit.aes = FALSE) +
-  geom_sf(data = sf_secondary_schools, mapping = aes(),
-          colour = "blue", size = 0.5, inherit.aes = FALSE) +
-  geom_sf(data = sf_city_boundary, mapping = aes(), 
-          fill = NA, colour = "brown", size = 1, inherit.aes = FALSE) +
-  ggtitle("Sheffield Secondary School 400m Iscochrones") +
-  theme_void()
+mapview(sf_secondary_schools, 
+        layer.name = "Secondary schools", 
+        label = "short_name") %>% 
+  addFeatures(sf_isochrones, layer.name = "Isochrones") %>% 
+  addFeatures(sf_city_boundary, weight = 2, 
+              color = "black", opacity = 1, fillOpacity = 0)
 ```
 
 Focusing on the isochrone for our example, Sheffield Park Academy:
 
-```{r agol-pro-park, fig.height = 7}
+```{r agol-pro-park}
 # Get a subset of just Sheffield Park Academy isochrone as a simple feature
 sf_park_isochrone <- filter(sf_isochrones, facilityid == 28)
 
 # Plot
-ggmap(park_basemap, extent = "device") +
-  geom_sf(data = sf_park_isochrone, mapping = aes(),
-          colour = "blue", size = 1.5, fill = NA, inherit.aes = FALSE) +
-  geom_sf(data = sf_park, mapping = aes(),
-          colour = "blue", size = 4, inherit.aes = FALSE) +
-  ggtitle("Sheffield Park Academy 400m Isochrone") +
-  theme_void()
+m <- mapview(sf_park, layer.name = "Park Academy") 
+
+setView(m@map, park_coords[1], park_coords[2], zoom = 15) %>% 
+  addFeatures(sf_park_isochrone, layer.name = "Isochrone")
 ```
 
 The roundabout on Prince of Wales Road has a walkway that goes underneath it but above the Parkway. The AGOL location service hasn't included this walkway, so the isochrone stops incorrectly short of the Parkway.

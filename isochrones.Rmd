@@ -32,14 +32,12 @@ h4.date {
 }
 </style>
 ```
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-	echo = TRUE,
-	message = FALSE
-)
+knitr::opts_chunk$set(echo = TRUE,	message = FALSE)
 
 library(tidyverse);library(magrittr)
-library(sf); library(ggmap)
+library(sf); library(ggmap); library(mapview)
 library(arcgisbinding); arc.check_product()
 ```
 
@@ -135,11 +133,12 @@ park_bbox <- st_buffer(sf_park, 500) %>%
 park_basemap <- get_stamenmap(bbox = park_bbox, zoom = 16, maptype = "toner")
 
 # Plot
-ggmap(park_basemap) +
-  geom_sf(data = sf_park, mapping = aes(),
-          colour = "blue", size = 4, inherit.aes = FALSE) +
-  ggtitle("Sheffield Park Academy") +
-  theme_void()
+# ggmap(park_basemap) +
+#   geom_sf(data = sf_park, mapping = aes(),
+#           colour = "blue", size = 4, inherit.aes = FALSE) +
+#   ggtitle("Sheffield Park Academy") +
+#   theme_void()
+mapview(sf_park, layer.name = "Sheffield Park Academy", zoom = 14)
 ```
 
 *TODO: Check school projection is correct*

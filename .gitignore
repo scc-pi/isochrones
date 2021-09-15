@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Archive folder
 /archive/
+
+# RStudio projects
+*.Rproj

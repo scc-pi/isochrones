@@ -39,6 +39,8 @@ knitr::opts_chunk$set(echo = TRUE,	message = FALSE, out.width = "100%")
 library(tidyverse);library(magrittr)
 library(sf); library(mapview); library(leafem); library(leaflet)
 library(arcgisbinding); arc.check_product()
+library(openrouteservice); ors_api_key(Sys.getenv("ors_api_key"))
+library(osmdata)
 ```
 
 # Introduction
@@ -146,7 +148,7 @@ sf_isochrones <- arc.open(isochrones_url) %>%
 m <- mapview(sf_secondary_schools, 
              layer.name = "Secondary schools", 
              label = "short_name") + 
- mapview(sf_isochrones, layer.name = "Isochrones")
+ mapview(sf_isochrones, layer.name = "Isochrones", label = FALSE)
 
 addFeatures(m, sf_city_boundary, weight = 2, 
             color = "black", opacity = 1, fillOpacity = 0)
@@ -170,6 +172,45 @@ The roundabout on Prince of Wales Road has a walkway that goes underneath it. Th
 # openrouteservice & R
 
 The [openrouteservice R client package](https://giscience.github.io/openrouteservice-r/index.html) provides easy access to the [openrouteservice](https://openrouteservice.org/) (ORS) API from R.
+
+```{r ors}
+# # Get school isochrones from the ORS
+# sf_park_ors_isochrone <- ors_isochrones(st_coordinates(sf_park),
+#                                    profile = "foot-walking",
+#                                    range_type = "distance",
+#                                    range = 400,
+#                                    output = "sf")
+
+# Point on the road
+sf_park_ors_isochrone <- ors_isochrones(c(-1.41661,53.37425),
+                                   profile = "foot-walking",
+                                   range_type = "distance",
+                                   range = 400,
+                                   output = "sf")
+
+# Bounding box for Park Academy 
+park_bbox <- st_buffer(sf_park_ors_isochrone, 200) %>% 
+  st_bbox() %>%
+  as.numeric()
+
+# OSM paths
+park_paths <- opq(park_bbox) %>%
+  add_osm_feature(key = "highway") %>% 
+  osmdata_sf() %>% 
+  osm_poly2line() 
+
+park_paths <- park_paths$osm_lines %>% 
+  filter(is.na(foot) | foot != "no")
+
+# Plot
+m <- mapview(sf_park, layer.name = "Park Academy", label = "short_name") +
+  mapview(sf_park_ors_isochrone, layer.name = "Isochrone", 
+          label = FALSE, alpha.region = 0.2) + 
+  mapview(park_paths, layer.name = "Paths")
+
+setView(m@map, park_coords[1], park_coords[2], zoom = 15) %>% 
+  addMeasure(primaryLengthUnit = "meters")
+```
 
 # OSMM Highways Network & Portal
 
